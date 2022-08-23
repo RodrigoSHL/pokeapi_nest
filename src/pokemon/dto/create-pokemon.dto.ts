@@ -11,7 +11,7 @@ export class CreatePokemonDto {
   @MinLength(1)
   name: string;
   @IsNumber()
-  @Min(0)
+  @Min(1)
   @IsPositive()
   no: number;
 }
