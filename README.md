@@ -23,5 +23,5 @@ docker-compose up -d
 ```
 
 ## Stack usado
-# NestJS
-# MongoDB
+NestJS y
+MongoDB
