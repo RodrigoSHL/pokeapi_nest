@@ -22,7 +22,13 @@ $ npm i -g @nestjs/cli
 docker-compose up -d
 ```
 
-4. Poblar base de datos con semilla
+4. Levantar la app
+
+```
+npm run start:dev
+```
+
+6. Poblar base de datos con semilla
 
 ```
 http://localhost:3000/api/v2/seed/

@@ -3,9 +3,14 @@ import { PokemonModule } from './pokemon/pokemon.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
+import { ConfigModule } from '@nestjs/config';
+import { EnvConfiguration } from './common/config/config';
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/nest-pokemon'),
+    ConfigModule.forRoot({
+      load: [EnvConfiguration],
+    }),
+    MongooseModule.forRoot(process.env.MONGO_DB),
     PokemonModule,
     CommonModule,
     SeedModule,
