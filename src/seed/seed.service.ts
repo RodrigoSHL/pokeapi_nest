@@ -21,7 +21,7 @@ export class SeedService {
     try {
       await this.pokemonModel.deleteMany({});
       const { data } = await this.httpService.axiosRef.get<PokemonResponse>(
-        'https://pokeapi.co/api/v2/pokemon?limit=60',
+        'https://pokeapi.co/api/v2/pokemon?limit=650',
       );
       const pokemonToInsert: { name: string; no: number }[] = [];
 
