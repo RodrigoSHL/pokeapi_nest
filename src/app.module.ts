@@ -6,6 +6,7 @@ import { SeedModule } from './seed/seed.module';
 import { ConfigModule } from '@nestjs/config';
 import { EnvConfiguration } from './common/config/config';
 import { JoiValidationSchema } from './common/config/joi.validation';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +17,7 @@ import { JoiValidationSchema } from './common/config/joi.validation';
     PokemonModule,
     CommonModule,
     SeedModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
