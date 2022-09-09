@@ -23,6 +23,7 @@ export class User extends Document {
   @Prop({
     index: true,
     required: false,
+    default: true,
   })
   isActive: boolean;
 
