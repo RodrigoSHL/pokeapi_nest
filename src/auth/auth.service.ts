@@ -39,17 +39,15 @@ export class AuthService {
 
   async login(loginUserDto: LoginUserDto) {
     const { password, email } = loginUserDto;
-    const user = await this.userModel
-      .findOne({ email: email })
-      .select('email password');
+    const user = await this.userModel.findOne({ email: email });
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
-    if (!bcrypt.compare(password, user.password)) {
+    if (!bcrypt.compareSync(password, user.password)) {
       throw new UnauthorizedException('Credentials not valid');
     }
     return {
-      ...loginUserDto,
+      ...user,
       token: this.getJwtToken({ id: user._id }),
     };
   }
