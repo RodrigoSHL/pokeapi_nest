@@ -71,7 +71,7 @@ export class AuthService {
       );
     }
     throw new InternalServerErrorException(
-      `Can't create User - Check server logs`,
+      `Can't create User - Check server logs or talk with admin`,
     );
   }
 }
