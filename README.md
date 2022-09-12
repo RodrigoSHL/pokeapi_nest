@@ -47,4 +47,5 @@ Heroku redeploy sin cambios:
 ```
 git commit --allow-empty -m "Tigger Heroku deploy"
 git push heroku <master|main>
+heroku logs --tail
 ```
