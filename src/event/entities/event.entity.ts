@@ -1,6 +1,7 @@
-import { Prop } from '@nestjs/mongoose';
-import { Schema } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Schema as Schemas } from 'mongoose';
 
+@Schema()
 export class Event extends Document {
   @Prop({
     index: true,
@@ -25,13 +26,15 @@ export class Event extends Document {
 
   @Prop({
     default: false,
+    required: false,
   })
   take: boolean;
 
   @Prop({
-    unique: true,
     index: true,
     ref: 'User',
   })
-  user: Schema.Types.ObjectId;
+  user: Schemas.Types.ObjectId;
 }
+
+export const EventSchema = SchemaFactory.createForClass(Event);

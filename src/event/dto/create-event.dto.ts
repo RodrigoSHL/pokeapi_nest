@@ -1,4 +1,11 @@
-import { IsBoolean, IsDate, IsString, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsDate,
+  IsDateString,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class CreateEventDto {
   @IsString()
@@ -9,10 +16,10 @@ export class CreateEventDto {
   @MinLength(1)
   notes: string;
 
-  @IsDate()
+  @IsDateString()
   start: string;
 
-  @IsDate()
+  @IsDateString()
   end: string;
 
   @IsBoolean()
