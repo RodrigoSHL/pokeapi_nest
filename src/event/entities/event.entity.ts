@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as Schemas } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { User } from 'src/auth/entities/user.entity';
 
 @Schema()
-export class Event extends Document {
+export class Event extends mongoose.Document {
   @Prop({
     index: true,
     required: true,
@@ -31,10 +32,23 @@ export class Event extends Document {
   take: boolean;
 
   @Prop({
+    required: false,
     index: true,
-    ref: 'User',
   })
-  user: Schemas.Types.ObjectId;
+  clientEmail: string;
+
+  @Prop({
+    required: false,
+  })
+  clientPhone: string;
+
+  @Prop({
+    required: false,
+  })
+  color: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: User;
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);
