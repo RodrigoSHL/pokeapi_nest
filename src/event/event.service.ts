@@ -3,11 +3,11 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { User } from 'src/auth/entities/user.entity';
+import { ClientTakeTimeDto } from './dto/client-take-time.dto';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './entities/event.entity';
@@ -20,10 +20,10 @@ export class EventService {
   ) {}
 
   async create(createEventDto: CreateEventDto, user: User) {
-    const event = { ...createEventDto, user: user._id };
+    const event = { ...createEventDto, user: user };
     try {
-      await this.eventModel.create(event);
-      return event;
+      const newEvent = await this.eventModel.create(event);
+      return newEvent;
     } catch (error) {
       this.handleException(error);
     }
@@ -33,8 +33,12 @@ export class EventService {
     return await this.eventModel.find();
   }
 
-  async findEventByUserId(user: User) {
+  async findEventByUser(user: User) {
     return await this.eventModel.find({ user: { $in: user._id } });
+  }
+
+  async findEventByUserId(id: string) {
+    return await this.eventModel.find({ user: { $in: id } });
   }
 
   async findOne(term: string) {
@@ -46,9 +50,7 @@ export class EventService {
       event = await this.eventModel.findOne({ title: term });
     }
     if (!event)
-      throw new NotFoundException(
-        `Event with id, name or no "${term}" not found`,
-      );
+      throw new NotFoundException(`Event with id "${term}" not found`);
     return event;
   }
 
@@ -68,6 +70,19 @@ export class EventService {
       throw new BadRequestException(`Event with ID ${term} not found`);
     }
     return;
+  }
+
+  async takeTime(clientTakeTimeDto: ClientTakeTimeDto, id: string) {
+    const event = await this.findOne(id);
+    if (event.take === true) {
+      throw new BadRequestException(`The time has already been taken`);
+    }
+    try {
+      await event.updateOne(clientTakeTimeDto);
+      return { ...event.toJSON(), ...clientTakeTimeDto };
+    } catch (error) {
+      this.handleException(error);
+    }
   }
 
   private handleException(error: any) {
