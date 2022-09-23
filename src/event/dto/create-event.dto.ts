@@ -1,8 +1,7 @@
-import { Type } from 'class-transformer';
 import {
   IsBoolean,
-  IsDate,
   IsDateString,
+  IsEmail,
   IsString,
   MinLength,
 } from 'class-validator';
@@ -24,4 +23,15 @@ export class CreateEventDto {
 
   @IsBoolean()
   take: boolean;
+
+  @IsEmail()
+  clientEmail: string;
+
+  @IsString()
+  @MinLength(8)
+  clientPhone: string;
+
+  @IsString()
+  @MinLength(4)
+  color: string;
 }
