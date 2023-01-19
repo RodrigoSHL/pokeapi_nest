@@ -4,7 +4,7 @@ import { EventController } from './event.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from 'src/auth/auth.module';
-import { EventSchema } from './entities/event.entity';
+import { Event, EventSchema } from './entities/event.entity';
 
 @Module({
   controllers: [EventController],
